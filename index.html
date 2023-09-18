@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groceries??</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="main__body">
+    <div class="list__container">
+        <h1 class="list__title">Grocery Helper</h1>
+        <div class="insert__wrapper">
+            <input type="text" id="item__input" placeholder="e.g eggs, bread, etc">
+            <button type="submit" id="submit__button">Submit</button>
+        </div>
+        <div class="item__list__wrapper">
+            <ul class="item__list">
+                <li class="test"><input class="test__input" type="text" disabled placeholder="Bread"><img class="edit" src="icons/edit.svg" alt="edit"><img class="delete" src="icons/trash.svg" alt="delete"></input></li>
+            </ul>
+        </div>
+        <button class="clear__items"> Clear items</button>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
