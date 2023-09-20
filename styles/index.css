@@ -1,1 +1,24 @@
 @import 'base.css';
+
+.main__content{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main__box{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.left__box{
+    position: relative;
+}
+.left__image{
+    filter: url(#sea);
+}
+
+.top__segment__left-box{
+    /*position: absolute; Looks even more shit with this on */
+}

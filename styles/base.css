@@ -27,20 +27,24 @@ All of these are nav specific designs
 .right__nav__wrapper{
     padding-right: 1vw;
     display: flex;
-    width: 7vw;
+    width: 8vw;
     justify-content: space-between;
 }
 .left__nav__wrapper{
     padding-left: 1vw; 
 }
 
-svg path{
+nav svg:hover{
+    cursor: pointer;
+}
+
+nav svg path{
     fill: var(--nav-icon-colors);
 }
 
 .about__ref{
     color: var(--nav-icon-colors);
     text-decoration: none;
-    font-size: 3vh;
+    font-size: 40px;
 }
 
