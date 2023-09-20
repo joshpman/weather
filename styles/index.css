@@ -16,9 +16,22 @@
     position: relative;
 }
 .left__image{
-    filter: url(#sea);
+    background: linear-gradient( rgba(255, 0, 0, 0.45), 
+    rgba(255, 0, 0, 0.45) ),
+  url("../images/trees.jpg");
 }
 
 .top__segment__left-box{
-    /*position: absolute; Looks even more shit with this on */
+    font-color: #fff;
+    position: absolute;
+    top: 8px;
+    left: 15px
+
+}
+
+.bottom__segment__left-box{
+    position: absolute;
+    bottom: 8px;
+    left: 15px
+
 }

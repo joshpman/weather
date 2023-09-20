@@ -29,6 +29,7 @@ All of these are nav specific designs
     display: flex;
     width: 8vw;
     justify-content: space-between;
+    align-items: center;
 }
 .left__nav__wrapper{
     padding-left: 1vw; 
@@ -45,6 +46,6 @@ nav svg path{
 .about__ref{
     color: var(--nav-icon-colors);
     text-decoration: none;
-    font-size: 40px;
+    font-size: 30px;
 }
 
