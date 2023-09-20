@@ -1,0 +1,46 @@
+:root{
+    --background-color: #cccccc;
+    --nav-color: #000000d5;
+    --nav-icon-colors: #ffffff;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.main__body{
+    background-color: var(--background-color);
+}
+
+/*
+All of these are nav specific designs
+*/
+.top__nav{
+    background-color: var(--nav-color);
+    display: inline-flex;
+    width: 100%;
+    height: 6vh;
+    justify-content: space-between;
+    align-items: center;
+}
+.right__nav__wrapper{
+    padding-right: 1vw;
+    display: flex;
+    width: 7vw;
+    justify-content: space-between;
+}
+.left__nav__wrapper{
+    padding-left: 1vw; 
+}
+
+svg path{
+    fill: var(--nav-icon-colors);
+}
+
+.about__ref{
+    color: var(--nav-icon-colors);
+    text-decoration: none;
+    font-size: 3vh;
+}
+
