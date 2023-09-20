@@ -1,37 +1,68 @@
 @import 'base.css';
-
+:root{
+    --font-color-left: #FFFFFF;
+    --right-box-background: rgb(45, 45, 45);
+    --left-side-color: rgb(72, 72, 255);
+}
 .main__content{
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .main__box{
+    margin-top: 8vh;
     display: flex;
-    flex-direction: row;
+    width: 60%;
 }
 
 
 .left__box{
     position: relative;
+    width: 50vw;
+    height: 70vh;
+    background: var(--left-side-color);
+    overflow: hidden;
+    border-radius: 5vmax;
 }
 .left__image{
-    background: linear-gradient( rgba(255, 0, 0, 0.45), 
-    rgba(255, 0, 0, 0.45) ),
-  url("../images/trees.jpg");
+    object-fit: cover;
+    opacity: .35;
+    
 }
 
 .top__segment__left-box{
-    font-color: #fff;
     position: absolute;
-    top: 8px;
-    left: 15px
-
+    top: 5vh;
+    left: 4vw;
 }
 
 .bottom__segment__left-box{
     position: absolute;
-    bottom: 8px;
-    left: 15px
+    bottom: 5vh;
+    left: 4vw;
+}
+.right__box{
+    z-index: -1;
+    background-color: var(--right-box-background);
+    width: 80%;
+    overflow: visible;
+    margin-left: -10vw;
+    border-radius: 5vmax;
+}
 
+.top__segment__left-box, .bottom__segment__left-box{
+    color: var(--font-color-left);
+}
+
+.top__segment__left-box .location__svg{
+    fill: var(--font-color-left);
+}
+.top__info{
+    text-align: right;
+    color: white;
+    position: relative;
+    top: 3vh;
+    right: 3vw;
 }

@@ -23,6 +23,8 @@ All of these are nav specific designs
     height: 6vh;
     justify-content: space-between;
     align-items: center;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
 }
 .right__nav__wrapper{
     padding-right: 1vw;
