@@ -4,6 +4,11 @@
     --right-box-background: rgb(45, 45, 45);
     --left-side-color: #6565fd;
 }
+/*Storing icons/photos to be used later in this segment*/
+
+.placeholder{
+    display: none;
+}
 .main__content{
     height: 100%;
     display: flex;
