@@ -2,7 +2,7 @@
 :root{
     --font-color-left: #FFFFFF;
     --right-box-background: rgb(45, 45, 45);
-    --left-side-color: rgb(72, 72, 255);
+    --left-side-color: #6565fd;
 }
 .main__content{
     height: 100%;
@@ -33,7 +33,7 @@
 }
 .left__image{
     object-fit: cover;
-    opacity: .35;
+    opacity: .25;
     height: 100%;
     object-position: center;
     
@@ -55,7 +55,15 @@
 }
 
 .top__segment__left-box .location__svg{
+    padding-left: 0;
+    margin-left: -1.5vw;
     fill: var(--font-color-left);
+}
+.left__location__wrapper{
+    margin-left: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 .right__box{
     z-index: -1;
@@ -71,6 +79,34 @@
 }
 
 
+.left__svg{
+    fill: var(--font-color-left);
+}
+/*Left Side font + SVG Sizes*/
+.weekday{
+    font-size: 2vw; 
+}
+.date{
+    font-size: 2.5vw;
+}
+.location{
+    font-size: 1.5vw;
+}
+.location__svg{
+    width: 2vw;
+    height: 3.5vh;
+}
+.temperature{
+    font-size: 3vw;
+}
+.condition{
+    line-height: 4vh;
+    font-size: 2.5vw;
+}
+.left__svg{
+    width: 4vw;
+    height: 7.5vh;
+}
 
 .top__info{
     text-align: right;
@@ -85,6 +121,7 @@
     grid-column-gap: 1px;
     grid-row-gap: 0px;
 }
+/* Sorting out left side, top text */
 #precip{
     grid-area: 1 / 1 / 2 / 2;
 }
@@ -113,6 +150,8 @@
     font-size: 1.5vw;
 }
 
+/*Managing forecast cards on bottom right*/
+
 .week__forecast{
     margin-left: 10vw;
     margin-top: auto;
@@ -123,6 +162,18 @@
     justify-content: flex-end;
 }
 
+.forecast__card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    float: right;
+}
+.forecast__card h1{
+    font-size: 3.5vh;
+}
+.forecast__card h2{
+    font-size: 2.5vh;
+}
 .weather__symbol{
     width: 10vw;
     height: 10vh;
@@ -131,12 +182,8 @@
     fill: #fff;
 }
 
-.forecast__card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    float: right;
-}
+
+/*Managing bottom button*/
 
 .button__wrapper{
     display: flex;
@@ -145,7 +192,8 @@
     margin-bottom: 5vh;
 }
 .button__wrapper button{
-    margin-top: auto;
+    margin-top: 1vh;
+    padding: 1vh 0 1vh 0;
     width: 70%;
     margin-right: 3vw;
     border-radius: 2vmax;
@@ -162,9 +210,3 @@
     cursor: pointer;
 }
 
-.forecast__card h1{
-    font-size: 3.5vh;
-}
-.forecast__card h2{
-    font-size: 2.5vh;
-}

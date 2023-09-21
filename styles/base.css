@@ -42,6 +42,10 @@ All of these are nav specific designs
 nav svg:hover{
     cursor: pointer;
 }
+nav svg{
+    height: 4vh;
+    width: 4vh;
+}
 
 nav svg path{
     fill: var(--nav-icon-colors);
@@ -50,6 +54,6 @@ nav svg path{
 .about__ref{
     color: var(--nav-icon-colors);
     text-decoration: none;
-    font-size: 30px;
+    font-size: 4vh;
 }
 
