@@ -21,8 +21,6 @@
     display: flex;
     width: 60%;
 }
-
-
 .left__box{
     position: relative;
     width: 50vw;
@@ -30,6 +28,18 @@
     background: var(--left-side-color);
     overflow: hidden;
     border-radius: 5vmax;
+}
+.right__box{
+    z-index: -1;
+    background-color: var(--right-box-background);
+    width: 80%;
+    height: 70vh;
+    overflow: visible;
+    margin-left: -10vw;
+    border-radius: 5vmax;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 .photo__frame{
     height: 100%;
@@ -43,7 +53,6 @@
     object-position: center;
     
 }
-
 .top__segment__left-box{
     position: absolute;
     top: 5vh;
@@ -70,18 +79,7 @@
     align-items: center;
     justify-content: left;
 }
-.right__box{
-    z-index: -1;
-    background-color: var(--right-box-background);
-    width: 80%;
-    height: 70vh;
-    overflow: visible;
-    margin-left: -10vw;
-    border-radius: 5vmax;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
+
 
 
 .left__svg{
