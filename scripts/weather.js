@@ -7,13 +7,26 @@ const sunBackdrop = document.querySelector('.sunny__backdrop');
 const partCloudBackdrop = document.querySelector('.partly__cloudy__backdrop');
 const stormyBackdrop = document.querySelector('.stormy__backdrop');
 const snowyBackdrop = document.querySelector('.snowy__backdrop');
-let location;
+let coordinates = [];
 document.addEventListener('DOMContentLoaded', () => { 
-    location = 'Detroit, MI';
+    getLocation();
+    
     setWeather = getWeather(location);
+    console.log("latitude " + coordinates[0] + " longitude " + coordinates[1]);
 });
 
+function getLocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(position=>{
+            coordinates.push(position.coords.latitude);
+            console.log(position.coords.latitude);
+            coordinates.push(position.coords.longitude);
+        })
+    }else{
+        console.log("Unable to fetch location");
+    }
 
+}
 function getWeather(location){
 
     
