@@ -15,9 +15,13 @@ const dayInMonth = date.getDate();
 const month = months[date.getMonth()];
 const year = date.getFullYear();
 const currentHour = date.getHours();
+const currentMinute = date.getMinutes();
+const formattedTime = currentHour + "" + currentMinute;
 let city = null;
 let state = null;
 let currentCondition;
+let sunrise;
+let sunset;
 const iconMap = new Map();
 const backdropMap = new Map();
 const codeMap = new Map();
@@ -25,7 +29,7 @@ const codeMapSimplified = new Map();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+    console.log(formattedTime);
     createMaps();
     getLocation().then(coordinates =>{
         getCity(coordinates);
@@ -34,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }), error=>{
         console.log(error);
     }
-    checkNight();
     updateDate();    
 });
 function createMaps(){
@@ -93,8 +96,6 @@ function generateWeathercodeMap(){
     codeMapSimplified.set("Heavy Showers", "Raining");
     codeMapSimplified.set("Storming", "Storming");
     codeMapSimplified.set("Snow Grains", "Snowing");
-
-
 }
 function parseForSymbol(input){  
     return codeMapSimplified.get(input);
@@ -118,7 +119,9 @@ function updateDate(){
     
 }
 function checkNight(){
-
+    const sunsetFormatted = sunset.split("T")[1].split(":").join("");
+    const sunriseFormatted = sunrise.split("T")[1].split(":").join("");
+    
 }
 function getLocation(){
     return new Promise((resolve, reject)=>{
@@ -136,7 +139,11 @@ function getLocation(){
         }
     });
 }
+document.getElementsByClassName("change__location")[0].addEventListener('click',log);
 
+function log(){
+    console.log("click");
+}
 function getDailyWeather(coordinates){
     let promise = new Promise(function(resolve,reject){
         let request = new XMLHttpRequest();
@@ -162,7 +169,7 @@ function getDailyWeather(coordinates){
 function getWeeklyWeather(coordinates) {
     let promise = new Promise(function(resolve, reject) {
       let request = new XMLHttpRequest();
-      const url = `https://api.open-meteo.com/v1/gfs?latitude=${coordinates[0]}&longitude=${coordinates[1]}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago&forecast_days=4`;
+      const url = `https://api.open-meteo.com/v1/gfs?latitude=${coordinates[0]}&longitude=${coordinates[1]}&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&temperature_unit=fahrenheit&timezone=America%2FChicago&forecast_days=4`;
       request.addEventListener("loadend", function() {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
@@ -201,6 +208,10 @@ function parseResponseDaily(response){
 }
 
 function parseResponseWeekly(response){
+    console.log(response);
+    sunrise = response.daily.sunrise[0];
+    sunset = response.daily.sunset[0];
+    console.log(sunrise);
     const iconHolder = document.getElementsByClassName("forecast__icon__wrapper");
     let iconCodes = [];
    for(let i = 0; i<4;i++){
@@ -214,6 +225,7 @@ function parseResponseWeekly(response){
         maxInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_max[i]) + "&degF";
         minInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_min[i]) + "&degF";
    }
+   checkNight();
 }
 
 
@@ -260,9 +272,15 @@ On page load:
     0. Update days of the week on forecast cards to be accurate
     1. Get user location with latitude and longitude
     2. Make three unique API calls
-        a. Call the google location API to figure out what city corresponds to the users Lat and Long
+        a. Call the locationIQ API to figure out what city corresponds to the users Lat and Long
         b. Make another API call for daily weather for four days, to display what goes on the 3 forecast cards after day 1
             Note: parse the data into a json and read the points needed, create a seperate function to analyze weather codes
         c. First API call gets hourly weather data for one hour, ie figure out what goes on the current tab/today data
         Note: With all of these, parse the data and pull out the necessary information immediately and update the webpage immediately
+
+On change location click:
+    1. Transition CSS to make the button a submit button + textfield
+    2. Call the location IQ api to get the coordinates of the city inputted
+    2.5. Update location in innerHTML so the text appears correct
+    3. Call the get weather functions to fetch + update weather.
 */
