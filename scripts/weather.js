@@ -139,10 +139,11 @@ function getLocation(){
         }
     });
 }
-document.getElementsByClassName("change__location")[0].addEventListener('click',log);
+document.getElementsByClassName("change__location")[0].addEventListener('click',transition);
 
-function log(){
-    console.log("click");
+function transition(){
+    document.getElementsByClassName("change__location")[0].style.display = "none";
+    document.getElementsByClassName("morph__text-box")[0].style.display = "flex";
 }
 function getDailyWeather(coordinates){
     let promise = new Promise(function(resolve,reject){
@@ -208,7 +209,6 @@ function parseResponseDaily(response){
 }
 
 function parseResponseWeekly(response){
-    console.log(response);
     sunrise = response.daily.sunrise[0];
     sunset = response.daily.sunset[0];
     console.log(sunrise);

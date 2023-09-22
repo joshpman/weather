@@ -30,7 +30,6 @@
     border-radius: 5vmax;
 }
 .right__box{
-    z-index: -1;
     background-color: var(--right-box-background);
     width: 80%;
     height: 70vh;
@@ -178,12 +177,15 @@
 .forecast__icon__wrapper svg{
     width: 10vw;
     height: 10vh;
-    fill: #fff;
-
+    fill: #fff
 }
 
 
 /*Managing bottom button*/
+
+.change__location{
+    display: none;
+}
 
 .button__wrapper{
     display: flex;
@@ -191,7 +193,7 @@
     justify-content: flex-end;
     margin-bottom: 5vh;
 }
-.button__wrapper button{
+.button__wrapper .change__location{
     margin-top: 1vh;
     padding: 1vh 0 1vh 0;
     width: 70%;
@@ -203,6 +205,7 @@
     font-size: 1.5vw;
     font-weight: bold;
 }
+
 .button__wrapper button svg{
     margin-right: .5vw;
 }
@@ -210,3 +213,41 @@
     cursor: pointer;
 }
 
+/*This area holds the hidden location input information
+Only shown upon button press of "Change location"*/
+
+.morph__text-box{
+    display: none;
+    padding-top: 1vh;
+    width: 85%;
+    /*display: flex; Enable this with Javascript to "turn on this section" */
+    justify-content:flex-end;
+    align-items: center;
+    transition: display linear 5s;
+}
+.location__input{
+    text-align: center;
+    margin-right: 3vw;
+    width: 100%;
+    border: none;
+}
+.location__input:focus{
+    outline: none;
+}
+.submit__button{
+    position: relative;
+    left: 10%;
+    width: 30%;
+    outline:none;
+    border: 1px black;
+    height: 100%;
+}
+.submit__button:hover{
+    cursor: pointer;
+}
+
+.location__input, .submit__button{
+    border-radius: 2vmax;
+    align-items: center;
+    padding: 1vh 0 1vh 0;
+}
