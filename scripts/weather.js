@@ -1,15 +1,16 @@
 const backgrounds = ["../backgrounds/cloudy-backdrop.jpg","../backgrounds/partly-cloudy-background.jpg"
 ,"../backgrounds/snowy-background.jpg","../backgrounds/stormy-background.jpg"
-,"../backgrounds/raining-background.jpg","../backgrounds/sunny-background.jpg"]
-const icons = document.getElementsByClassName("placeholder__icons__start");
-const dayCardDays = document.getElementsByClassName("day__of__week");
+,"../backgrounds/raining-background.jpg","../backgrounds/sunny-background.jpg",
+"../backgrounds/night-backdrop.jpeg"];
 const conditions = ["Cloudy", "Partly Cloudy", "Snowing", "Storming", "Raining", "Sunny"];
-const date = new Date();
 const weekdays =["Sun", "Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
 const fullDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-const fullDay = fullDays[date.getDay()];
+const icons = document.getElementsByClassName("placeholder__icons__start");
+const dayCardDays = document.getElementsByClassName("day__of__week");
 let days = [];
+const date = new Date();
+const fullDay = fullDays[date.getDay()];
 const dayInMonth = date.getDate();
 const month = months[date.getMonth()];
 const year = date.getFullYear();
@@ -19,6 +20,8 @@ let state = null;
 let currentCondition;
 const iconMap = new Map();
 const backdropMap = new Map();
+const codeMap = new Map();
+const codeMapSimplified = new Map();
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,9 +44,60 @@ function createMaps(){
     }
     generateWeathercodeMap();
 }
-
+/*This function is painful but I cant come up with a better method
+Weathercodes appear to follow no mathematical pattern or ordering*/
 function generateWeathercodeMap(){
+    codeMap.set(0, "Sunny");
+    codeMap.set(1, "Partly Cloudy");
+    codeMap.set(2, "Partly Cloudy");
+    codeMap.set(3, "Overcast");
+    codeMap.set(45, "Foggy");
+    codeMap.set(48, "Foggy");
+    codeMap.set(51, "Drizzling");
+    codeMap.set(53, "Drizzling");
+    codeMap.set(55, "Drizzling");
+    codeMap.set(56, "Freezing Drizzle");
+    codeMap.set(57, "Freezing Drizzle");
+    codeMap.set(61, "Light Rain");
+    codeMap.set(63, "Moderate Rain");
+    codeMap.set(65, "Heavy Rain");
+    codeMap.set(66, "Freezing Rain");
+    codeMap.set(67, "Freezing Rain");
+    codeMap.set(71, "Light Snow");
+    codeMap.set(73, "Moderate Snow");
+    codeMap.set(75, "Heavy Snow");
+    codeMap.set(77, "Snow Grains");
+    codeMap.set(80, "Light Showers");
+    codeMap.set(81, "Moderate Showers");
+    codeMap.set(82, "Heavy Showers");
+    codeMap.set(85, "Light Snow");
+    codeMap.set(86, "Heavy Snow");
+    codeMap.set(95, "Storming");
+    codeMap.set(96, "Storming");
+    codeMap.set(99, "Storming");
+    codeMapSimplified.set("Sunny", "Sunny");
+    codeMapSimplified.set("Partly Cloudy", "Partly Cloudy");
+    codeMapSimplified.set("Foggy", "Cloudy");
+    codeMapSimplified.set("Overcast", "Cloudy");
+    codeMapSimplified.set("Drizzling", "Raining");
+    codeMapSimplified.set("Freezing Drizzle","Raining");
+    codeMapSimplified.set("Light Rain", "Raining");
+    codeMapSimplified.set("Moderate Rain", "Raining");
+    codeMapSimplified.set("Heavy Rain", "Raining");
+    codeMapSimplified.set("Freezing Rain", "Raining");
+    codeMapSimplified.set("Light Snow", "Snowing");
+    codeMapSimplified.set("Moderate Snow", "Snowing");
+    codeMapSimplified.set("Heavy Snow", "Snowing");
+    codeMapSimplified.set("Light Showers", "Raining");
+    codeMapSimplified.set("Moderate Showers", "Raining");
+    codeMapSimplified.set("Heavy Showers", "Raining");
+    codeMapSimplified.set("Storming", "Storming");
+    codeMapSimplified.set("Snow Grains", "Snowing");
 
+
+}
+function parseForSymbol(input){  
+    return codeMapSimplified.get(input);
 }
 function updateDate(){
     let i = 0;
@@ -67,7 +121,6 @@ function checkNight(){
 
 }
 function getLocation(){
-    
     return new Promise((resolve, reject)=>{
         let coordinates = [];
         if(navigator.geolocation){
@@ -127,30 +180,36 @@ function getWeeklyWeather(coordinates) {
     );
 }
 function parseResponseDaily(response){
-    const conditionCurrent = parseWeatherCode(response.hourly.weathercode[currentHour]);
+    const conditionCurrent = parseCode(response.hourly.weathercode[currentHour]);
+    const simplifiedCondition = parseForSymbol(conditionCurrent);
     const leftBackground =document.getElementsByClassName("left__image")[0];
     const oldIcon = document.getElementsByClassName("left__svg")[0];
-    const newIcon = iconMap.get(conditionCurrent).cloneNode(true);
+    const newIcon = iconMap.get(simplifiedCondition).cloneNode(true);
     const currentTemp = Math.round(response.hourly.temperature_2m[currentHour]);
     const tempFormatted = currentTemp + "&degF";
     const rainChance = response.hourly.precipitation_probability[currentHour];
     const humidity = response.hourly.relativehumidity_2m[currentHour];
     const feelsLike = Math.round(response.hourly.apparent_temperature[currentHour]);
     oldIcon.parentNode.replaceChild(newIcon, oldIcon);
-    leftBackground.src= backdropMap.get(conditionCurrent);
+    leftBackground.src= backdropMap.get(simplifiedCondition);
     document.getElementById("precip__chance").innerHTML = rainChance + "%";
     document.getElementById("humidity__percent").innerHTML = humidity + "%";
     document.getElementById("feels__like__temp").innerHTML = feelsLike + "&degF"
     document.getElementsByClassName("temperature")[0].innerHTML = tempFormatted;
     document.getElementById("temp__for__card1").innerHTML=tempFormatted;
-    document.getElementsByClassName("condition")[0].innerHTML = parseWeatherCode(response.hourly.weathercode[currentHour]);
+    document.getElementsByClassName("condition")[0].innerHTML = conditionCurrent;
 }
 
 function parseResponseWeekly(response){
-   // parseWeatherCode(response.daily.weathercode);
+    const iconHolder = document.getElementsByClassName("forecast__icon__wrapper");
+    let iconCodes = [];
+   for(let i = 0; i<4;i++){
+    let currentIcon = iconMap.get(parseForSymbol(parseCode(response.daily.weathercode[i]))).cloneNode(true);
+    let oldChild = iconHolder[i].children[0];
+    iconHolder[i].replaceChild(currentIcon, oldChild);
+   }
    const maxInHTML = document.getElementsByClassName("temperature__for-card-max");
    const minInHTML = document.getElementsByClassName("temperature__for-card-min");
-   console.log(response);
    for(let i = 0; i<4; i++){   
         maxInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_max[i]) + "&degF";
         minInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_min[i]) + "&degF";
@@ -158,39 +217,10 @@ function parseResponseWeekly(response){
 }
 
 
-function parseWeatherCode(code){
-    const x = code;
-    switch(x){
-        case 0:
-            currentCondition = "Sunny";
-            break;
-        case 2:
-            currentCondition = "Partly Cloudy";
-            break;
-        case 3:
-            currentCondition = "Cloudy";
-            break;
-        case (x<=67):
-            currentCondition = "Raining";
-            break;
-        case (x<=77):
-            currentCondition = "Snowing";
-            break;
-        case (x<=82):
-            currentCondition = "Raining";
-            break;
-        case (x<=86):
-            currentCondition = "Snowing";
-            break;
-        case (x<=99):
-            currentCondition = "Storming";
-            break;
-        default:
-            currentCondition = "Misc";
-    }
-    return currentCondition;
-
+function parseCode(code){
+    return codeMap.get(code);
 }
+
 function printError(errorMessage){
     console.log(errorMessage);
 }

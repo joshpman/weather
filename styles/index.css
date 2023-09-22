@@ -175,12 +175,12 @@
 .forecast__card h2{
     font-size: 2.5vh;
 }
-.weather__symbol{
+.forecast__icon__wrapper svg{
     width: 10vw;
     height: 10vh;
-}
-.weather__symbol{
     fill: #fff;
+    stroke: transparent;
+    stroke-width: 5vh;
 }
 
 
