@@ -31,15 +31,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }), error=>{
         console.log(error);
     }
+    checkNight();
     updateDate();    
 });
 function createMaps(){
-    for(let i = 0; i<backgrounds.length;i++){
-       
+    for(let i = 0; i<backgrounds.length;i++){       
         iconMap.set(conditions[i], icons[i]);
         backdropMap.set(conditions[i], backgrounds[i]);
     }
-    console.log(iconMap);
+    generateWeathercodeMap();
+}
+
+function generateWeathercodeMap(){
+
 }
 function updateDate(){
     let i = 0;
@@ -59,7 +63,9 @@ function updateDate(){
     }
     
 }
+function checkNight(){
 
+}
 function getLocation(){
     
     return new Promise((resolve, reject)=>{
@@ -77,28 +83,8 @@ function getLocation(){
         }
     });
 }
-function getDailyWeather(coordinates) {
-    let promise = new Promise(function(resolve, reject) {
-      let request = new XMLHttpRequest();
-      const url = `https://api.open-meteo.com/v1/gfs?latitude=${coordinates[0]}&longitude=${coordinates[1]}&daily=weathercode,temperature_2m_max&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago&forecast_days=1`;
-      request.addEventListener("loadend", function() {
-        const response = JSON.parse(this.responseText);
-        if (this.status === 200) {
-          resolve(response);
-        } else {
-          reject(response);
-        }
-      });
-      request.open("GET", url, true);
-      request.send();
-    });
-    promise.then(
-        response => parseResponseDaily(response),
-        errorMessage => printError(errorMessage)
-    );
-    
-}
-function getWeeklyWeather(coordinates){
+
+function getDailyWeather(coordinates){
     let promise = new Promise(function(resolve,reject){
         let request = new XMLHttpRequest();
         const url = `https://api.open-meteo.com/v1/gfs?latitude=${coordinates[0]}&longitude=${coordinates[1]}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,weathercode&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago&forecast_days=1`;
@@ -115,19 +101,32 @@ function getWeeklyWeather(coordinates){
 
     });
     promise.then(
-        response => parseResponseWeekly(response),
+        response => parseResponseDaily(response),
         errorMessage => printError(errorMessage)
     );
     
 }
-
-function parseResponseDaily(response){
-   // parseWeatherCode(response.daily.weathercode);
-   // console.log(response);
+function getWeeklyWeather(coordinates) {
+    let promise = new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest();
+      const url = `https://api.open-meteo.com/v1/gfs?latitude=${coordinates[0]}&longitude=${coordinates[1]}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago&forecast_days=4`;
+      request.addEventListener("loadend", function() {
+        const response = JSON.parse(this.responseText);
+        if (this.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      });
+      request.open("GET", url, true);
+      request.send();
+    });
+    promise.then(
+        response => parseResponseWeekly(response),
+        errorMessage => printError(errorMessage)
+    );
 }
-
-/*Misleading name, this handles daily stuff*/
-function parseResponseWeekly(response){
+function parseResponseDaily(response){
     const conditionCurrent = parseWeatherCode(response.hourly.weathercode[currentHour]);
     const leftBackground =document.getElementsByClassName("left__image")[0];
     const oldIcon = document.getElementsByClassName("left__svg")[0];
@@ -146,6 +145,19 @@ function parseResponseWeekly(response){
     document.getElementById("temp__for__card1").innerHTML=tempFormatted;
     document.getElementsByClassName("condition")[0].innerHTML = parseWeatherCode(response.hourly.weathercode[currentHour]);
 }
+
+function parseResponseWeekly(response){
+   // parseWeatherCode(response.daily.weathercode);
+   const maxInHTML = document.getElementsByClassName("temperature__for-card-max");
+   const minInHTML = document.getElementsByClassName("temperature__for-card-min");
+   console.log(response);
+   for(let i = 0; i<4; i++){   
+        maxInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_max[i]) + "&degF";
+        minInHTML[i].innerHTML= Math.round(response.daily.temperature_2m_min[i]) + "&degF";
+   }
+}
+
+
 function parseWeatherCode(code){
     const x = code;
     switch(x){
