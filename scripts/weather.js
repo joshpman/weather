@@ -1,18 +1,29 @@
-const cloud = document.querySelector('.cloudy__icon');
-const partcloud = document.querySelector('.partly__cloudy__icon');
-const snowy = document.querySelector('.snowy__icon');
-const stormy = document.querySelector('.stormy__icon');
-const sunny = document.querySelector('.sunny__icon');
-const sunBackdrop = document.querySelector('.sunny__backdrop');
-const partCloudBackdrop = document.querySelector('.partly__cloudy__backdrop');
-const stormyBackdrop = document.querySelector('.stormy__backdrop');
-const snowyBackdrop = document.querySelector('.snowy__backdrop');
-let weekdays =["Sun", "Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const backgrounds = ["../backgrounds/cloudy-backdrop.jpg","../backgrounds/partly-cloudy-background.jpg"
+,"../backgrounds/snowy-background.jpg","../backgrounds/stormy-background.jpg"
+,"../backgrounds/raining-background.jpg","../backgrounds/sunny-background.jpg"]
+const icons = document.getElementsByClassName("placeholder__icons__start");
+const dayCardDays = document.getElementsByClassName("day__of__week");
+const conditions = ["Cloudy", "Partly Cloudy", "Snowing", "Storming", "Raining", "Sunny"];
+const date = new Date();
+const weekdays =["Sun", "Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
+const fullDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const fullDay = fullDays[date.getDay()];
+let days = [];
+const dayInMonth = date.getDate();
+const month = months[date.getMonth()];
+const year = date.getFullYear();
+const currentHour = date.getHours();
 let city = null;
 let state = null;
-let today = 
+let currentCondition;
+const iconMap = new Map();
+const backdropMap = new Map();
+
+
 document.addEventListener('DOMContentLoaded', () => {
+    
+    createMaps();
     getLocation().then(coordinates =>{
         getCity(coordinates);
         getDailyWeather(coordinates);
@@ -20,7 +31,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }), error=>{
         console.log(error);
     }
-    });
+    updateDate();    
+});
+function createMaps(){
+    for(let i = 0; i<backgrounds.length;i++){
+       
+        iconMap.set(conditions[i], icons[i]);
+        backdropMap.set(conditions[i], backgrounds[i]);
+    }
+    console.log(backdropMap);
+}
+function updateDate(){
+    let i = 0;
+    let pointerI = date.getDay()
+    while(i<4){
+        days.push(weekdays[pointerI]);
+        pointerI++;
+        i++;
+        if(pointerI==7) pointerI=0;
+    }
+    
+    const fullDate = dayInMonth + " " + month + " " + year;
+    document.getElementsByClassName("weekday")[0].innerHTML = fullDay;
+    document.getElementsByClassName("date")[0].innerHTML = fullDate;
+    for(let j = 0; j<4; j++){
+        dayCardDays[j].innerHTML = days[j];
+    }
+    
+}
 
 function getLocation(){
     
@@ -60,7 +98,6 @@ function getDailyWeather(coordinates) {
     );
     
 }
-
 function getWeeklyWeather(coordinates){
     let promise = new Promise(function(resolve,reject){
         let request = new XMLHttpRequest();
@@ -86,26 +123,66 @@ function getWeeklyWeather(coordinates){
 
 function parseResponseDaily(response){
    // parseWeatherCode(response.daily.weathercode);
-    console.log(response);
+   // console.log(response);
 }
+
+/*Misleading name, this handles daily stuff*/
 function parseResponseWeekly(response){
-    console.log(response);
+    const conditionCurrent = parseWeatherCode(response.hourly.weathercode[currentHour]);
+    const leftBackground =document.getElementsByClassName("left__image")[0];
+    const oldIcon = document.getElementsByClassName("left__svg")[0];
+    const newIcon = iconMap.get(conditionCurrent).cloneNode(true);
+    const currentTemp = Math.round(response.hourly.temperature_2m[currentHour]);
+    const tempFormatted = currentTemp + "&degF";
+    const rainChance = response.hourly.precipitation_probability[currentHour];
+    const humidity = response.hourly.relativehumidity_2m[currentHour];
+    const feelsLike = Math.round(response.hourly.apparent_temperature[currentHour]);
+    oldIcon.parentNode.replaceChild(newIcon, oldIcon);
+    leftBackground.src= backdropMap.get(conditionCurrent);
+    document.getElementById("precip__chance").innerHTML = rainChance + "%";
+    document.getElementById("humidity__percent").innerHTML = humidity + "%";
+    document.getElementById("feels__like__temp").innerHTML = feelsLike + "&degF"
+    document.getElementsByClassName("temperature")[0].innerHTML = tempFormatted;
+    document.getElementById("temp__for__card1").innerHTML=tempFormatted;
+    document.getElementsByClassName("condition")[0].innerHTML = parseWeatherCode(response.hourly.weathercode[currentHour]);
 }
 function parseWeatherCode(code){
+    const x = code;
+    switch(x){
+        case 0:
+            currentCondition = "Sunny";
+            break;
+        case 2:
+            currentCondition = "Partly Cloudy";
+            break;
+        case 3:
+            currentCondition = "Cloudy";
+            break;
+        case (x<=67):
+            currentCondition = "Raining";
+            break;
+        case (x<=77):
+            currentCondition = "Snowing";
+            break;
+        case (x<=82):
+            currentCondition = "Raining";
+            break;
+        case (x<=86):
+            currentCondition = "Snowing";
+            break;
+        case (x<=99):
+            currentCondition = "Storming";
+            break;
+        default:
+            currentCondition = "Misc";
+    }
+    return currentCondition;
 
 }
 function printError(errorMessage){
     console.log(errorMessage);
 }
 
-
-function setWeather(){
-
-}
-
-function updateDays(){
-
-}
 
 function getCity(coordinates){
     let promise = new Promise(function(resolve,reject){
@@ -131,8 +208,8 @@ function getCity(coordinates){
 function parseCity(data){
     city = data.address.city;
     if(data.address.state !== undefined) state = data.address.state_code.toUpperCase();
-    console.log(city);
-    console.log(state);
+    const locationFormatted = city + ", " + state;
+    document.getElementsByClassName("location")[0].innerHTML = locationFormatted;
 }
 /*
 Basic buisness logic:

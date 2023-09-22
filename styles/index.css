@@ -81,8 +81,10 @@
     justify-content: left;
 }
 
-.left__svg{
+.bottom__segment__left-box svg{
     fill: var(--font-color-left);
+    width: 4vw;
+    height: 7.5vh;
 }
 /*Left Side font + SVG Sizes*/
 .weekday{
@@ -105,10 +107,7 @@
     line-height: 4vh;
     font-size: 2.5vw;
 }
-.left__svg{
-    width: 4vw;
-    height: 7.5vh;
-}
+
 
 .top__info{
     text-align: right;
