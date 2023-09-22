@@ -39,7 +39,7 @@ function createMaps(){
         iconMap.set(conditions[i], icons[i]);
         backdropMap.set(conditions[i], backgrounds[i]);
     }
-    console.log(backdropMap);
+    console.log(iconMap);
 }
 function updateDate(){
     let i = 0;
