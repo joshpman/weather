@@ -31,7 +31,7 @@ All of these are nav specific designs
 .right__nav__wrapper{
     padding-right: 1vw;
     display: flex;
-    width: 8vw;
+    width: auto;
     justify-content: space-between;
     align-items: center;
 }
@@ -39,6 +39,9 @@ All of these are nav specific designs
     padding-left: 1vw; 
 }
 
+.right__nav__wrapper svg{
+    margin-left: 1.5vw;
+}
 nav svg:hover{
     cursor: pointer;
 }
