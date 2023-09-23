@@ -1,6 +1,6 @@
 const backgrounds = ["../backgrounds/cloudy-backdrop.jpg","../backgrounds/partly-cloudy-background.jpg"
 ,"../backgrounds/snowy-background.jpg","../backgrounds/stormy-background.jpg"
-,"../backgrounds/raining-background.jpg","../backgrounds/sunny-background.jpg",
+,"../backgrounds/raining-backdrop.jpg","../backgrounds/sunny-background.jpg",
 "../backgrounds/night-backdrop.jpeg"];
 const conditions = ["Cloudy", "Partly Cloudy", "Snowing", "Storming", "Raining", "Sunny"];
 const weekdays =["Sun", "Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
@@ -28,6 +28,7 @@ const codeMap = new Map();
 const codeMapSimplified = new Map();
 
 
+document.getElementsByClassName("change__location")[0].addEventListener('click',transition);
 document.addEventListener('DOMContentLoaded', () => {
     console.log(formattedTime);
     createMaps();
@@ -118,10 +119,15 @@ function updateDate(){
     }
     
 }
+/* Function to check if its currently dark outside to adjust theming + weather terms */
 function checkNight(){
     const sunsetFormatted = sunset.split("T")[1].split(":").join("");
     const sunriseFormatted = sunrise.split("T")[1].split(":").join("");
-    
+    if(sunsetFormatted<formattedTime<sunriseFormatted) nightMode();
+}
+/*Function to adjust themeing to coorespond to night time */
+function nightMode(){
+
 }
 function getLocation(){
     return new Promise((resolve, reject)=>{
@@ -139,12 +145,59 @@ function getLocation(){
         }
     });
 }
-document.getElementsByClassName("change__location")[0].addEventListener('click',transition);
-
+/*Simple function to transition the change location button to a text form + submit button */
 function transition(){
     document.getElementsByClassName("change__location")[0].style.display = "none";
     document.getElementsByClassName("morph__text-box")[0].style.display = "flex";
+    document.getElementsByClassName("submit__button")[0].addEventListener('click', ()=>{
+        const inputCity = document.getElementsByClassName("location__input")[0].value;
+        if(inputCity.length>2){
+            getCoordinates(inputCity);
+            document.getElementsByClassName("location__input")[0].value = "";
+            deTransition();
+        }
+
+    });
 }
+function deTransition(){
+    document.getElementsByClassName("change__location")[0].style.display = "flex";
+    document.getElementsByClassName("morph__text-box")[0].style.display = "none";
+}
+function getCoordinates(cityName){
+    
+    let promise = new Promise(function(resolve, reject){
+        let request = new XMLHttpRequest()
+        const url = `https://us1.locationiq.com/v1/search?key=pk.19cb014570b4901570dd01c6c245324d&q=${cityName}&format=json&addressdetails=1&normalizecity=1&statecode=1`
+        request.addEventListener('loadend', function(){
+            const response = JSON.parse(this.responseText);
+            if(this.status == 200){
+                resolve(response);
+            }else{
+                reject(response);
+            }
+        });
+        request.open("GET", url, true);
+        request.send();
+    });
+    promise.then(
+        response => callWeatherFuncs(response),
+        errorMessage => printError(errorMessage)
+    );
+}
+function callWeatherFuncs(response){
+    console.log(response);
+    let city = response[0].address.city;
+    let state = response[0].address.state;
+    changeCity(city + ", " + state);
+    let coords = [];
+    coords.push(response[0].lat);
+    coords.push(response[0].lon);
+    getDailyWeather(coords);
+    getWeeklyWeather(coords);
+
+}
+
+/*Function to handle API request for daily weather, goes by hour to get temp + condition accuracy*/
 function getDailyWeather(coordinates){
     let promise = new Promise(function(resolve,reject){
         let request = new XMLHttpRequest();
@@ -167,6 +220,7 @@ function getDailyWeather(coordinates){
     );
     
 }
+/*API Request to get weekly weather, gathers min/max temp + weathercode for four days*/
 function getWeeklyWeather(coordinates) {
     let promise = new Promise(function(resolve, reject) {
       let request = new XMLHttpRequest();
@@ -191,7 +245,7 @@ function parseResponseDaily(response){
     const conditionCurrent = parseCode(response.hourly.weathercode[currentHour]);
     const simplifiedCondition = parseForSymbol(conditionCurrent);
     const leftBackground =document.getElementsByClassName("left__image")[0];
-    const oldIcon = document.getElementsByClassName("left__svg")[0];
+    const oldIcon = document.getElementsByClassName("left__svg__wrapper")[0].children[0];
     const newIcon = iconMap.get(simplifiedCondition).cloneNode(true);
     const currentTemp = Math.round(response.hourly.temperature_2m[currentHour]);
     const tempFormatted = currentTemp + "&degF";
@@ -263,7 +317,10 @@ function parseCity(data){
     city = data.address.city;
     if(data.address.state !== undefined) state = data.address.state_code.toUpperCase();
     const locationFormatted = city + ", " + state;
-    document.getElementsByClassName("location")[0].innerHTML = locationFormatted;
+    changeCity(locationFormatted);
+}
+function changeCity(nameFormatted){
+    document.getElementsByClassName("location")[0].innerHTML = nameFormatted;
 }
 /*
 Basic buisness logic:

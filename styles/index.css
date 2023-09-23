@@ -190,11 +190,12 @@
 .button__wrapper{
     display: flex;
     width: 100%;
+    height: 8.7vh;
     justify-content: flex-end;
     margin-bottom: 5vh;
 }
 .button__wrapper .change__location{
-    margin-top: 1vh;
+    margin-top: 1.2vh;
     padding: 1vh 0 1vh 0;
     width: 70%;
     margin-right: 3vw;
@@ -220,6 +221,7 @@ Only shown upon button press of "Change location"*/
     display: none;
     padding-top: 1vh;
     width: 85%;
+    height: 8vh;
     /*display: flex; Enable this with Javascript to "turn on this section" */
     justify-content:flex-end;
     align-items: center;
@@ -229,18 +231,21 @@ Only shown upon button press of "Change location"*/
     text-align: center;
     margin-right: 3vw;
     width: 100%;
+    height: 5vh;
     border: none;
 }
 .location__input:focus{
     outline: none;
 }
 .submit__button{
+    font-weight: bold;
+    font-size: 1.5vw;
     position: relative;
     left: 10%;
     width: 30%;
     outline:none;
     border: 1px black;
-    height: 100%;
+    height: 7vh;
 }
 .submit__button:hover{
     cursor: pointer;
