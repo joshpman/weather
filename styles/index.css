@@ -388,7 +388,7 @@ Only shown upon button press of "Change location"*/
         height: 8vh;
     }
     .location{
-        font-size: 8vw
+        font-size: 5vw
     }
     .temperature{
         font-size: 10vw;
