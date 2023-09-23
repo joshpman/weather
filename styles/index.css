@@ -258,6 +258,9 @@ Only shown upon button press of "Change location"*/
 }
 
 @media(max-width: 1400px){
+    .main__content{
+        margin-bottom: 8vh;
+    }
     .main__box{
         justify-content: center;
         align-items: center;
@@ -315,6 +318,12 @@ Only shown upon button press of "Change location"*/
     .float__right{
         font-size: 3vw;
     }
+    .week__forecast{
+        margin-top: -3vh;
+    }
+    .forecast__card h1{
+        font-size: 5vw;
+    }
     .forecast__card h2{
         font-size: 5vw;
     }
@@ -328,6 +337,7 @@ Only shown upon button press of "Change location"*/
 }
 
 @media(max-width: 850px){
+
     .main__box{
         justify-content: center;
         align-items: center;
@@ -336,5 +346,67 @@ Only shown upon button press of "Change location"*/
     }
     .main__box .left__box, .main__box .right__box{
         width: 95vw;
+    }
+    .week__forecast{
+        justify-content: space-around;
+        margin-top: 5vh;
+    }
+    .forecast__icon__wrapper{
+        line-height: -10vh;
+    }
+    .top__segment__left-box{
+        top: 23vh;
+        left: 10vw;
+    }  
+    .bottom__segment__left-box{
+        bottom: 14vh;
+        left: 10vw;
+    }
+    .weekday{
+        font-size: 14vw;
+    }
+    .date{
+        font-size: 12vw;
+    }
+    .location__svg{
+        width: 8vw;
+        height: 8vh;
+    }
+    .location{
+        font-size: 8vw
+    }
+    .temperature{
+        font-size: 10vw;
+    }  
+    .condition{
+        font-size: 10vw;
+    }
+    .left__svg__wrapper svg{
+        width: 15vw;
+        height: 12vh;
+    }
+    .float__left{
+        font-size: 4vw;
+    }
+    .float__right{
+        font-size: 3vw;
+    }
+    .forecast__card h2{
+        font-size: 6vw;
+    }
+    .button__wrapper .change__location{
+        font-size: 6vw;
+    }
+    .float__left{
+        font-size: 8vw;
+    }
+    .float__right{
+        font-size: 6vw;
+    }
+    .forecast__card h1{
+        font-size: 8vw;
+    }
+    .forecast__card h2{
+        font-size: 7vw;
     }
 }
