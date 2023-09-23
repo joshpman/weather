@@ -1,6 +1,6 @@
-const backgrounds = ["../backgrounds/cloudy-backdrop.jpg","../backgrounds/partly-cloudy-background.jpg"
-,"../backgrounds/snowy-background.jpg","../backgrounds/stormy-background.jpg"
-,"../backgrounds/raining-backdrop.jpg","../backgrounds/sunny-background.jpg",
+const backgrounds = ["backgrounds/cloudy-backdrop.jpg","backgrounds/partly-cloudy-background.jpg"
+,"backgrounds/snowy-background.jpg","backgrounds/stormy-background.jpg"
+,"backgrounds/raining-backdrop.jpg","backgrounds/sunny-background.jpg",
 "../backgrounds/night-backdrop.jpeg"];
 const conditions = ["Cloudy", "Partly Cloudy", "Snowing", "Storming", "Raining", "Sunny"];
 const weekdays =["Sun", "Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
