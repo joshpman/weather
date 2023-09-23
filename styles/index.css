@@ -256,3 +256,73 @@ Only shown upon button press of "Change location"*/
     align-items: center;
     padding: 1vh 0 1vh 0;
 }
+
+@media(max-width: 1400px){
+    .main__box{
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 90%;
+    }
+    .main__box .left__box{
+        position:initial;
+        width: 70vw;
+    }
+    .top__segment__left-box{
+        top: 23vh;
+        left: 20vw;
+    }  
+    .bottom__segment__left-box{
+        bottom: 14vh;
+        left: 20vw;
+    }
+    .weekday{
+        font-size: 10vw;
+    }
+    .date{
+        font-size: 8vw;
+    }
+    .location__svg{
+        width: 6vw;
+        height: 6vh;
+    }
+    .location{
+        font-size: 6vw
+    }
+    .temperature{
+        font-size: 8vw;
+    }  
+    .condition{
+        font-size: 6vw;
+    }
+    .left__svg__wrapper svg{
+        width: 8vw;
+        height: 12vh;
+    }
+    .right__box, .week__forecast{
+        margin-left: 0;
+    }
+    .top__info{
+        width: 90%;
+    }
+    .week__forecast, .button__wrapper{
+        justify-content: center;
+        width: 100%;
+    }
+    .float__left{
+        font-size: 4vw;
+    }
+    .float__right{
+        font-size: 3vw;
+    }
+    .forecast__card h2{
+        font-size: 5vw;
+    }
+    .forecast__card:not(:first-child){
+        margin-left: 5vw;
+    }
+    .button__wrapper .change__location{
+        font-size: 4vw;
+    }
+
+}

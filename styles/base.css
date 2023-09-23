@@ -29,14 +29,14 @@ All of these are nav specific designs
     padding-bottom: 2vh;
 }
 .right__nav__wrapper{
-    padding-right: 1vw;
+    padding-right: 2vw;
     display: flex;
     width: auto;
     justify-content: space-between;
     align-items: center;
 }
 .left__nav__wrapper{
-    padding-left: 1vw; 
+    padding-left: 2vw; 
 }
 
 .right__nav__wrapper svg{

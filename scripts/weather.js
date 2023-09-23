@@ -30,7 +30,6 @@ const codeMapSimplified = new Map();
 
 document.getElementsByClassName("change__location")[0].addEventListener('click',transition);
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(formattedTime);
     createMaps();
     getLocation().then(coordinates =>{
         getCity(coordinates);
@@ -185,10 +184,9 @@ function getCoordinates(cityName){
     );
 }
 function callWeatherFuncs(response){
-    console.log(response);
     let city = response[0].address.city;
     let state = response[0].address.state;
-    changeCity(city + ", " + state);
+    parseCity(response);
     let coords = [];
     coords.push(response[0].lat);
     coords.push(response[0].lon);
@@ -265,7 +263,6 @@ function parseResponseDaily(response){
 function parseResponseWeekly(response){
     sunrise = response.daily.sunrise[0];
     sunset = response.daily.sunset[0];
-    console.log(sunrise);
     const iconHolder = document.getElementsByClassName("forecast__icon__wrapper");
     let iconCodes = [];
    for(let i = 0; i<4;i++){
@@ -312,11 +309,48 @@ function getCity(coordinates){
         errorMessage => printError(errorMessage)
     );
 }
-
 function parseCity(data){
-    city = data.address.city;
-    if(data.address.state !== undefined) state = data.address.state_code.toUpperCase();
-    const locationFormatted = city + ", " + state;
+    let locationFormatted;
+    if(Array.isArray(data)){
+        data=Array.from(data);
+        let parseableData = data[0].address
+        if("city" in parseableData){
+            if("state_code" in parseableData){
+                locationFormatted = parseableData.city + ", " + parseableData.state_code.toUpperCase();
+            }else{
+                locationFormatted = parseableData.city + ", " + parseableData.state;
+            }
+        }else if("county" in parseableData){
+            if("state_code" in parseableData){
+                locationFormatted = parseableData.county + ", " + parseableData.state_code.toUpperCase();
+            }else{
+                locationFormatted = parseableData.county + ", " + parseableData.state;
+            }
+        }else if("state" in parseableData){
+                locationFormatted = parseableData.state + ", " + parseableData.country;
+        }else{
+            locationFormatted = parseableData.country;
+        }
+    }else{
+        if("city" in data.address){
+            if("state_code" in data.address){
+                locationFormatted = data.address.city + ", " + data.address.state_code.toUpperCase();
+                
+            }else{
+                locationFormatted = data.address.city + ", " + data.address.state;
+            }
+        }else if("county" in data.address){
+            if("state_code" in data.address){
+                locationFormatted = data.address.county + ", " + data.address.state_code.toUpperCase();
+            }else{
+                locationFormatted = data.address.county + ", " + data.address.state;
+            }
+        }else if("state" in data.address){
+                locationFormatted = data.address.state + ", " + data.address.country;
+        }else{
+            locationFormatted = data.address.country;
+        }
+    }
     changeCity(locationFormatted);
 }
 function changeCity(nameFormatted){
