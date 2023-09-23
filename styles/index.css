@@ -256,6 +256,9 @@ Only shown upon button press of "Change location"*/
     align-items: center;
     padding: 1vh 0 1vh 0;
 }
+.location__input{
+    font-size: 1.5vw;
+}
 
 @media(max-width: 1400px){
     .main__content{
@@ -269,13 +272,18 @@ Only shown upon button press of "Change location"*/
     }
     .main__box .left__box{
         position:initial;
-        width: 70vw;
+        width: 72vw;
+    }
+    .right__box{
+        position: relative;
+        bottom: 10vh;
     }
     .top__segment__left-box{
         top: 23vh;
         left: 20vw;
     }  
     .bottom__segment__left-box{
+        margin-bottom: 3vh;
         bottom: 14vh;
         left: 20vw;
     }
@@ -344,15 +352,22 @@ Only shown upon button press of "Change location"*/
         flex-direction: column;
         width: 100%;
     }
+    .right__box{
+        bottom: 7vh;
+    }
     .main__box .left__box, .main__box .right__box{
         width: 95vw;
     }
     .week__forecast{
         justify-content: space-around;
-        margin-top: 5vh;
+        margin-top: -4vh;
     }
     .forecast__icon__wrapper{
         line-height: -10vh;
+    }
+    .forecast__icon__wrapper svg{
+        width: 13vw;
+        height: 13vw;
     }
     .top__segment__left-box{
         top: 23vh;
@@ -408,5 +423,34 @@ Only shown upon button press of "Change location"*/
     }
     .forecast__card h2{
         font-size: 7vw;
+    }
+    .button__wrapper{
+        display: flex;
+        margin: 0;
+        width: 90vw;
+        justify-content: center;
+        margin-right: 1vw;
+    }
+    .button__wrapper .change__location{
+        width: 90vw;
+    }
+    .morph__text-box{
+        width: 100%;
+        justify-content: left;
+        
+    }
+    .submit__button{
+        font-size: 5vw;
+    }
+    .location__input{
+        margin-right: 12vw;
+        width: 100%;
+        font-size: 4vw;
+    }
+}
+@media(max-width: 650px){
+    .week__forecast{
+        justify-content: space-around;
+        margin-top: 4vh;
     }
 }

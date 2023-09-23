@@ -27,7 +27,7 @@ const backdropMap = new Map();
 const codeMap = new Map();
 const codeMapSimplified = new Map();
 
-
+/*Task to declare maps and setup inital weather data*/ 
 document.getElementsByClassName("change__location")[0].addEventListener('click',transition);
 document.addEventListener('DOMContentLoaded', () => {
     createMaps();
