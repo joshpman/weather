@@ -122,11 +122,34 @@ function updateDate(){
 function checkNight(){
     const sunsetFormatted = sunset.split("T")[1].split(":").join("");
     const sunriseFormatted = sunrise.split("T")[1].split(":").join("");
-    if(sunsetFormatted<formattedTime<sunriseFormatted) nightMode();
+    if(sunsetFormatted<formattedTime<sunriseFormatted){
+        setTimeout(nightMode,1000);
+    } 
 }
 /*Function to adjust themeing to coorespond to night time */
 function nightMode(){
+    console.log("Night mode activated"); // Check if function is called
 
+    // Ensure the backgrounds array exists and is long enough
+    if (!backgrounds || backgrounds.length < 7) {
+        console.log("Backgrounds array is not properly defined");
+        return;
+    }
+    
+    console.log("Background to use: ", backgrounds[6]); // Log the background to use
+    
+    const leftBackground = document.getElementsByClassName("left__image")[0];
+    
+    // Ensure the element is found and is an image
+    if (!leftBackground || leftBackground.tagName !== 'IMG') {
+        console.log("No valid image element found with class 'left__image'");
+        return;
+    }
+
+    leftBackground.src = backgrounds[6];
+    if(document.getElementsByClassName("condition")[0].innerHTML==="Sunny"){
+       document.getElementsByClassName("condition")[0].innerHTML="Clear";
+      }
 }
 function getLocation(){
     return new Promise((resolve, reject)=>{
