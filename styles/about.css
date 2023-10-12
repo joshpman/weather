@@ -1,0 +1,45 @@
+@import 'base.css';
+:root{
+    --box-primary: #4D4C7D;
+    --font-primary: #f2f1f1;
+}
+.main__content{
+    display: flex;
+    width: 100%;
+    height: 89vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#box{
+    width: 70%;
+    height: 90%;
+    background-color: var(--box-primary);
+    border-radius: 4vmin;
+    color: var(--font-primary);
+}
+#gap__creater{
+    display: flex;
+    position: relative;
+    left: 3%;
+    flex-direction: column;
+}
+#main__header{
+   margin-bottom: 2vh;
+}
+#main__h1{
+    font-size: 86px;
+}
+#question__answer{
+    line-height: 5vh;
+}
+.question{
+    font-size: 60px;
+}
+.answer{
+    font-size: 40px;
+}
+.answer > a{
+    
+    color: inherit;
+}

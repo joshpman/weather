@@ -3,6 +3,9 @@
     --background-color: #cccccc;
     --nav-color: #000000d5;
     --nav-icon-colors: #ffffff;
+        --font-color-left: #FFFFFF;
+        --right-box-background: rgb(45, 45, 45);
+        --left-side-color: #6565fd;
 }
 
 *{
