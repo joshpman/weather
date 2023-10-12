@@ -29,7 +29,8 @@
     justify-content: space-between;
 }
 #main__header{
-   margin-bottom: 2vh;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
 }
 #main__h1{
     font-size: 86px;
@@ -58,9 +59,11 @@
 }
 #linkedin__logo, #github__logo{
     height: 15vh;
-    filter: grayscale(100%);
+    filter: grayscale(85%);
 }
 #linkedin__logo:hover, #github__logo:hover{
     cursor: pointer;
     filter: grayscale(0%);
+    transition: filter .3s linear;
+
 }
