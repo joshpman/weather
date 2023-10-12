@@ -17,12 +17,16 @@
     background-color: var(--box-primary);
     border-radius: 4vmin;
     color: var(--font-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 #gap__creater{
     display: flex;
     position: relative;
     left: 3%;
     flex-direction: column;
+    justify-content: space-between;
 }
 #main__header{
    margin-bottom: 2vh;
@@ -40,6 +44,23 @@
     font-size: 40px;
 }
 .answer > a{
-    
     color: inherit;
+}
+#logo__holder{
+    position: relative;
+    bottom: 10%;
+    left: 10vw;
+    width: 50vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5vh;
+}
+#linkedin__logo, #github__logo{
+    height: 15vh;
+    filter: grayscale(100%);
+}
+#linkedin__logo:hover, #github__logo:hover{
+    cursor: pointer;
+    filter: grayscale(0%);
 }
